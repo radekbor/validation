@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.validation.ConstraintViolationException;
 
 @Service
 public class TestService {
@@ -24,14 +25,14 @@ public class TestService {
         log.info("test");
         try {
             myService.foo(null);
-        } catch (Exception e) {
-            log.error("null passed");
+        } catch (ConstraintViolationException e) {
+            log.error("{} {}", e.getMessage(), e.getLocalizedMessage());
         }
         try {
             MyPojo myPojo = new MyPojo(null);
             myService.foo(myPojo);
-        } catch (Exception e) {
-            log.error("not valid object passed");
+        } catch (ConstraintViolationException e) {
+            log.error("{} {}", e.getMessage(), e.getLocalizedMessage());
         }
 
     }

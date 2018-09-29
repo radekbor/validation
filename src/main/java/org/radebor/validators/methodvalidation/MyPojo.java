@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 @Validated
 public class MyPojo {
 
-    @NotNull
+    @NotNull(message = "id can't be null")
     private Long id;
 
     MyPojo(@NotNull Long id) {

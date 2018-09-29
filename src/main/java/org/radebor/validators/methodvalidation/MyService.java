@@ -16,7 +16,7 @@ public class MyService {
 
     public void foo(
             @Valid
-            @NotNull MyPojo pojo) {
+            @NotNull(message = "can't be null") MyPojo pojo) {
         log.info("inside foo");
     }
 }
