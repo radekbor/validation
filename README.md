@@ -1,4 +1,4 @@
 TODO
 - Add restTest
-- Change lange
-- Load dynamically, sub errors
+- Change language
+- Change text during runtime

@@ -11,6 +11,9 @@ public class RestPojo {
     @Length(min = 5, max = 10, message = "error.ssn.length-between")
     private String ssn;
 
+    @Length(max = 10, min = 5, message = "error.ssn.length-between")
+    private String partnerSsn;
+
     public String getId() {
         return id;
     }
