@@ -28,7 +28,9 @@ public class ExceptionAdvice {
 
         List<ObjectError> allErrors = e.getBindingResult().getAllErrors();
         for(ObjectError objectError: allErrors) {
-            log.info("{} \n {} \n {} \n {}", objectError.getObjectName(), objectError.getArguments(), objectError.getCode(), objectError.getCodes());
+            Object[] arguments = objectError.getArguments();
+            arguments = Arrays.copyOfRange(arguments, 1, arguments.length);
+            log.info("{} \n {} \n {} \n {}", objectError.getObjectName(), arguments, objectError.getCode(), objectError.getCodes());
             String errorMessage = messageSource
                     .getMessage(objectError.getDefaultMessage(), objectError.getArguments(), Locale.getDefault());
             result.put(objectError.getObjectName(), errorMessage);
