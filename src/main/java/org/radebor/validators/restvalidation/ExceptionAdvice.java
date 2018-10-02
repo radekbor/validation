@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -34,8 +35,10 @@ public class ExceptionAdvice {
             Object[] arguments = objectError.getArguments();
             arguments = Arrays.copyOfRange(arguments, 1, arguments.length);
             log.info("{} \n {} \n {} \n {}", objectError.getObjectName(), arguments, objectError.getCode(), objectError.getCodes());
+            Locale locale = LocaleContextHolder.getLocale();
+            log.info("{} {}", locale, objectError.getDefaultMessage());
             String errorMessage = messageSource
-                    .getMessage(objectError.getDefaultMessage(), objectError.getArguments(), Locale.getDefault());
+                    .getMessage(objectError.getDefaultMessage(), objectError.getArguments(), locale);
             result.put(objectError.getObjectName(), errorMessage);
         }
 
