@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.context.MessageSource;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.ObjectError;
@@ -31,17 +32,20 @@ public class ExceptionAdvice {
         Map<String, String> result = new HashMap<>();
 
         List<ObjectError> allErrors = e.getBindingResult().getAllErrors();
-        for(ObjectError objectError: allErrors) {
+        for (ObjectError objectError : allErrors) {
             Object[] arguments = objectError.getArguments();
             arguments = Arrays.copyOfRange(arguments, 1, arguments.length);
             log.info("{} \n {} \n {} \n {}", objectError.getObjectName(), arguments, objectError.getCode(), objectError.getCodes());
             Locale locale = LocaleContextHolder.getLocale();
             log.info("{} {}", locale, objectError.getDefaultMessage());
-            String errorMessage = messageSource
-                    .getMessage(objectError.getDefaultMessage(), objectError.getArguments(), locale);
-            result.put(objectError.getObjectName(), errorMessage);
+            try {
+                String errorMessage = messageSource
+                        .getMessage(objectError.getDefaultMessage(), objectError.getArguments(), locale);
+                result.put(objectError.getObjectName(), errorMessage);
+            } catch (NoSuchMessageException ex) {
+                result.put(objectError.getObjectName(), objectError.getDefaultMessage());
+            }
         }
-
         return result;
     }
 }

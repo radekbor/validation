@@ -1,4 +1,4 @@
-package org.radebor.validators.restvalidation;
+package org.radebor.validators.restvalidation.simple;
 
 import org.hibernate.validator.constraints.Length;
 

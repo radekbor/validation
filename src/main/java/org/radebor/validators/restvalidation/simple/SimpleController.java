@@ -1,9 +1,7 @@
-package org.radebor.validators.restvalidation;
+package org.radebor.validators.restvalidation.simple;
 
-import org.radebor.validators.methodvalidation.MyPojo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,9 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-public class MyController {
+public class SimpleController {
 
-    private static final Logger log = LoggerFactory.getLogger(MyController.class);
+    private static final Logger log = LoggerFactory.getLogger(SimpleController.class);
 
     @PostMapping("/handle")
     public boolean handle(
